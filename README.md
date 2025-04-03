@@ -1,2 +1,0 @@
-# Jokegeneratorhub
-jokerpoke
