@@ -1,1 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Content Generator</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          #ff7e5f,
+          #feb47b,
+          #ffcc00,
+          #ff0055,
+          #00d2ff,
+          #0055ff
+        ); /* Rainbow gradient */
+        background-size: 400% 400%;
+        animation: rainbow 10s ease infinite; /* Animated rainbow background */
+      }
+
+      /* Sparkle animation */
+      @keyframes sparkle {
+        0% {
+          opacity: 0.5;
+          transform: translateY(-10px) rotate(0);
+        }
+        25% {
+          opacity: 1;
+          transform: translateY(5px) rotate(45deg);
+        }
+        50% {
+          opacity: 0.5;
+          transform: translateY(-10px) rotate(90deg);
+        }
+        75% {
+          opacity: 1;
+          transform: translateY(5px) rotate(135deg);
+        }
+        100% {
+          opacity: 0.5;
+          transform: translateY(-10px) rotate(180deg);
+        }
+      }
+
+      .sparkle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background-color: #fff;
+        border-radius: 50%;
+        animation: sparkle 1s infinite;
+        pointer-events: none;
+      }
+
+      #container {
+        text-align: center;
+        width: 90%;
+        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      #search-box {
+        padding: 10px;
+        font-size: 18px;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 5px;
+        border: 2px solid #007bff;
+        margin-bottom: 15px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      #search-box:focus {
+        outline: none;
+        border-color: #2575fc;
+      }
+
+      #show-form {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        display: none;
+      }
+
+      #show-form:hover {
+        background-color: #0056b3;
+      }
+
+      #instruction-form {
+        display: none;
+        margin-top: 30px;
+      }
+
+      #user-input {
+        padding: 10px;
+        font-size: 16px;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+        margin-bottom: 15px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      #user-input:focus {
+        outline: none;
+        border-color: #2575fc;
+      }
+
+      #generate-content {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      #generate-content:hover {
+        background-color: #0056b3;
+      }
+
+      #generated-content-box {
+        display: none;
+        margin-top: 30px;
+        background-color: #f7f7f7;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #generated-content {
+        font-size: 1.2rem;
+        color: #333;
+      }
+
+      footer {
+        margin-top: 40px;
+        font-size: 1rem;
+      }
+
+      footer a {
+        text-decoration: none;
+        color: #007bff;
+      }
+
+      footer a:hover {
+        color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="sparkle"
+      style="top: 30%; left: 40%; animation-delay: 0.1s"
+    ></div>
+    <div
+      class="sparkle"
+      style="top: 60%; left: 60%; animation-delay: 0.2s"
+    ></div>
+    <div
+      class="sparkle"
+      style="top: 20%; left: 70%; animation-delay: 0.3s"
+    ></div>
+    <div
+      class="sparkle"
+      style="top: 80%; left: 30%; animation-delay: 0.4s"
+    ></div>
+    <div
+      class="sparkle"
+      style="top: 50%; left: 10%; animation-delay: 0.5s"
+    ></div>
+
+    <div id="container">
+      <h1>AI Content Generator</h1>
+
+      <input
+        type="text"
+        id="search-box"
+        placeholder="Ask something (e.g., 'tell me a joke')"
+      />
+      <button id="show-form">Generate Content</button>
+
+      <div id="instruction-form">
+        <h2>Enter your instruction (e.g., "Generate a joke about animals")</h2>
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Type your instruction here"
+        />
+        <button id="generate-content">Generate</button>
+      </div>
+
+      <div id="generated-content-box">
+        <h3>Generated Content:</h3>
+        <p id="generated-content">
+          Your AI-generated content will appear here.
+        </p>
+      </div>
+
+      <footer>
+        Created by Tori with Love<br />
+        Hosted on
+        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer"
+          >Vercel</a
+        ><br />
+        Check the code on
+        <a
+          href="https://github.com/babycoder91a/Jokegeneratorhub/blob/main/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </footer>
+    </div>
+
+    <script>
+      // Show form when the user types a relevant question into the search box
+      document
+        .getElementById("search-box")
+        .addEventListener("input", function () {
+          const searchQuery = document
+            .getElementById("search-box")
+            .value.toLowerCase();
+          const showFormButton = document.getElementById("show-form");
+
+          if (
+            searchQuery.includes("tell me") ||
+            searchQuery.includes("generate") ||
+            searchQuery.includes("content")
+          ) {
+            showFormButton.style.display = "block"; // Show the button
+          } else {
+            showFormButton.style.display = "none"; // Hide the button
+          }
+        });
+
+      // Show the form and hide the search box when the user clicks on the 'Generate Content' button
+      document
+        .getElementById("show-form")
+        .addEventListener("click", function () {
+          document.getElementById("instruction-form").style.display = "block";
+          document.getElementById("search-box").style.display = "none";
+          document.getElementById("show-form").style.display = "none";
+        });
+
+      // Function to generate AI-based content based on user input
+      document
+        .getElementById("generate-content")
+        .addEventListener("click", function () {
+          const userInput = document
+            .getElementById("user-input")
+            .value.toLowerCase()
+            .trim();
+          let generatedContent = "";
+
+          if (userInput.includes("joke")) {
+            generatedContent =
+              "Why don't skeletons fight each other? They don't have the guts!";
+          } else if (userInput.includes("poem")) {
+            generatedContent =
+              "Roses are red,\nViolets are blue,\nAI is smart,\nAnd so are you!";
+          } else if (userInput.includes("quote")) {
+            generatedContent =
+              '"The only way to do great work is to love what you do." - Steve Jobs';
+          } else if (userInput.includes("recipe")) {
+            generatedContent =
+              "Here's a quick recipe for a sandwich:\n1. Take two slices of bread.\n2. Add your favorite fillings.\n3. Enjoy!";
+          } else if (userInput.includes("denominator of pi")) {
+            generatedContent =
+              "Pi's denominator is infinite, making it irrational!";
+          } else {
+            generatedContent = "Sorry, I can't generate content for that!";
+          }
+
+          // Display generated content
+          document.getElementById("generated-content").textContent =
+            generatedContent;
+          document.getElementById("generated-content-box").style.display =
+            "block"; // Show the content box
+        });
+    </script>
+  </body>
+</html>
 
