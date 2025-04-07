@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Content Generator</title>
     <style>
+      /* Styling code remains the same as in your provided code */
       body {
         font-family: Arial, sans-serif;
         display: flex;
@@ -282,34 +283,25 @@
             .trim();
           let generatedContent = "";
 
-          // Check if the user wants any kind of joke
-          if (userInput.includes("joke")) {
-            generatedContent =
-              "A computer programmer goes to buy some bread. On his way out, his wife says, 'and while you're there, get a carton of eggs.' He never returned.";
-          } else if (userInput.includes("programming joke")) {
-            generatedContent =
-              "Why did the computer programmer go to the coffee shop? To get a taste of Java.";
-          } else if (userInput.includes("light bulb joke")) {
-            generatedContent =
-              "How many programmers does it take to screw in a lightbulb? None. We don't address hardware issues.";
-          } else if (userInput.includes("two fingers joke")) {
-            generatedContent =
-              "A programmer walks into a bar, holds up two fingers, and says, 'I'll have three beers please.'";
-          } else if (userInput.includes("halloween christmas joke")) {
-            generatedContent =
-              "Why do programmers get confused between Halloween and Christmas? Because OCT 31 = DEC 25.";
-          } else if (userInput.includes("dark mode joke")) {
-            generatedContent =
-              "Why do most programmers use dark mode? Because the light attracts too many bugs.";
-          } else if (userInput.includes("communist java joke")) {
-            generatedContent =
-              "Why are Communists bad Java programmers? They don't like classes.";
-          } else if (userInput.includes("hardware issue joke")) {
-            generatedContent =
-              "How many programmers do you need to fix a light bulb? None, it is a hardware issue!";
-          } else {
-            generatedContent = "Sorry, I can't generate content for that!";
-          }
+          // List of jokes including your new ones
+          const jokes = [
+            "How many programmers does it take to screw in a lightbulb? None. We don't address hardware issues.",
+            "A programmer walks into a bar, holds up two fingers, and says, 'I'll have three beers please.'",
+            "Why did the computer programmer go to the coffee shop? To get a taste of Java.",
+            "Why do programmers get confused between Halloween and Christmas? Because OCT 31 = DEC 25.",
+            "Why do most programmers use dark mode? Because the light attracts too many bugs.",
+            "Why are Communists bad Java programmers? They don't like classes.",
+            "How many programmers do you need to fix a light bulb? None, it's a hardware issue!",
+            "What’s a ghost’s favorite data type? A boooolean.",
+            "If you’re paid to code, you’re a programmer. But what if it’s a hobby? Then you are just a grammer.",
+            "PSA: Please be advised that “beef stew” is no longer an allowable password. It’s not stroganoff.",
+            "A man walks into a pet shop and sees 3 monkeys, each in a cage, each with a computer. The man asks, 'What is the story with the monkeys?' 'They are programming monkeys! This one can complete 100 lines of C++ in an hour – 100$.'",
+            "How do hackers escape the police? \\police.",
+            "Why does Task Manager use the phrase 'Kill the Application'? Because they are all executable!",
+          ];
+
+          // Randomly select a joke
+          generatedContent = jokes[Math.floor(Math.random() * jokes.length)];
 
           // Display generated content
           document.getElementById("generated-content").textContent =
@@ -320,5 +312,4 @@
     </script>
   </body>
 </html>
-
 
