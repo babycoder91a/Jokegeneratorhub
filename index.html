@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Content Generator</title>
-
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -22,9 +21,9 @@
           #ff0055,
           #00d2ff,
           #0055ff
-        ); /* Rainbow gradient */
+        );
         background-size: 400% 400%;
-        animation: rainbow 10s ease infinite; /* Animated rainbow background */
+        animation: rainbow 10s ease infinite;
       }
 
       /* Sparkle animation */
@@ -283,21 +282,31 @@
             .trim();
           let generatedContent = "";
 
+          // Check if the user wants any kind of joke
           if (userInput.includes("joke")) {
             generatedContent =
-              "Why don't skeletons fight each other? They don't have the guts!";
-          } else if (userInput.includes("poem")) {
+              "A computer programmer goes to buy some bread. On his way out, his wife says, 'and while you're there, get a carton of eggs.' He never returned.";
+          } else if (userInput.includes("programming joke")) {
             generatedContent =
-              "Roses are red,\nViolets are blue,\nAI is smart,\nAnd so are you!";
-          } else if (userInput.includes("quote")) {
+              "Why did the computer programmer go to the coffee shop? To get a taste of Java.";
+          } else if (userInput.includes("light bulb joke")) {
             generatedContent =
-              '"The only way to do great work is to love what you do." - Steve Jobs';
-          } else if (userInput.includes("recipe")) {
+              "How many programmers does it take to screw in a lightbulb? None. We don't address hardware issues.";
+          } else if (userInput.includes("two fingers joke")) {
             generatedContent =
-              "Here's a quick recipe for a sandwich:\n1. Take two slices of bread.\n2. Add your favorite fillings.\n3. Enjoy!";
-          } else if (userInput.includes("denominator of pi")) {
+              "A programmer walks into a bar, holds up two fingers, and says, 'I'll have three beers please.'";
+          } else if (userInput.includes("halloween christmas joke")) {
             generatedContent =
-              "Pi's denominator is infinite, making it irrational!";
+              "Why do programmers get confused between Halloween and Christmas? Because OCT 31 = DEC 25.";
+          } else if (userInput.includes("dark mode joke")) {
+            generatedContent =
+              "Why do most programmers use dark mode? Because the light attracts too many bugs.";
+          } else if (userInput.includes("communist java joke")) {
+            generatedContent =
+              "Why are Communists bad Java programmers? They don't like classes.";
+          } else if (userInput.includes("hardware issue joke")) {
+            generatedContent =
+              "How many programmers do you need to fix a light bulb? None, it is a hardware issue!";
           } else {
             generatedContent = "Sorry, I can't generate content for that!";
           }
@@ -311,4 +320,5 @@
     </script>
   </body>
 </html>
+
 
