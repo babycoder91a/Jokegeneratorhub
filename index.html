@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Content Generator</title>
+    <title>AI Joke Generator</title>
     <style>
-      /* Styling code remains the same as in your provided code */
       body {
         font-family: Arial, sans-serif;
         display: flex;
@@ -27,9 +26,21 @@
         animation: rainbow 10s ease infinite;
       }
 
-      /* Sparkle animation */
-      @keyframes sparkle {
+      @keyframes rainbow {
         0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
           opacity: 0.5;
           transform: translateY(-10px) rotate(0);
         }
@@ -38,147 +49,128 @@
           transform: translateY(5px) rotate(45deg);
         }
         50% {
-          opacity: 0.5;
           transform: translateY(-10px) rotate(90deg);
         }
         75% {
-          opacity: 1;
           transform: translateY(5px) rotate(135deg);
-        }
-        100% {
-          opacity: 0.5;
-          transform: translateY(-10px) rotate(180deg);
         }
       }
 
       .sparkle {
         position: absolute;
-        top: 50%;
-        left: 50%;
         width: 5px;
         height: 5px;
-        background-color: #fff;
+        background: #fff;
         border-radius: 50%;
         animation: sparkle 1s infinite;
         pointer-events: none;
       }
 
       #container {
-        text-align: center;
-        width: 90%;
-        max-width: 600px;
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.95);
         padding: 30px;
+        border-radius: 15px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        position: relative;
-        z-index: 1;
+        text-align: center;
+        max-width: 600px;
+        width: 90%;
       }
 
       h1 {
         font-size: 2.5rem;
-        margin-bottom: 20px;
         color: #333;
       }
 
-      #search-box {
-        padding: 10px;
-        font-size: 18px;
+      input[type="text"] {
         width: 80%;
         max-width: 500px;
+        padding: 10px;
+        font-size: 1rem;
         border-radius: 5px;
         border: 2px solid #007bff;
         margin-bottom: 15px;
-        transition: all 0.3s ease-in-out;
       }
 
-      #search-box:focus {
+      input:focus {
+        border-color: #0056b3;
         outline: none;
-        border-color: #2575fc;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
       }
 
       #show-form {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
         display: none;
-      }
-
-      #show-form:hover {
-        background-color: #0056b3;
       }
 
       #instruction-form {
         display: none;
-        margin-top: 30px;
-      }
-
-      #user-input {
-        padding: 10px;
-        font-size: 16px;
-        width: 80%;
-        max-width: 500px;
-        border-radius: 5px;
-        border: 2px solid #ccc;
-        margin-bottom: 15px;
-        transition: all 0.3s ease-in-out;
-      }
-
-      #user-input:focus {
-        outline: none;
-        border-color: #2575fc;
-      }
-
-      #generate-content {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-      }
-
-      #generate-content:hover {
-        background-color: #0056b3;
       }
 
       #generated-content-box {
-        display: none;
         margin-top: 30px;
-        background-color: #f7f7f7;
+        background: #f7f7f7;
         padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      #generated-content {
-        font-size: 1.2rem;
-        color: #333;
+        border-radius: 8px;
+        display: none;
       }
 
       footer {
-        margin-top: 40px;
-        font-size: 1rem;
+        margin-top: 20px;
+        font-size: 0.9rem;
       }
 
       footer a {
-        text-decoration: none;
         color: #007bff;
+        text-decoration: none;
       }
 
       footer a:hover {
         color: #0056b3;
       }
+
+      /* Dark Mode */
+      body.dark {
+        background: linear-gradient(135deg, #2c3e50, #4ca1af);
+      }
+
+      body.dark #container {
+        background-color: rgba(20, 20, 20, 0.9);
+        color: #f1f1f1;
+      }
+
+      body.dark input[type="text"],
+      body.dark #generated-content-box {
+        background-color: #333;
+        color: #fff;
+        border-color: #888;
+      }
+
+      body.dark button {
+        background-color: #666;
+      }
+
+      body.dark footer a {
+        color: #0ff;
+      }
     </style>
   </head>
   <body>
+    <!-- Dark Mode Toggle Button -->
+    <button id="dark-mode-toggle">🌙 Toggle Dark Mode</button>
+
+    <!-- Sparkles animation -->
     <div
       class="sparkle"
       style="top: 30%; left: 40%; animation-delay: 0.1s"
@@ -201,114 +193,114 @@
     ></div>
 
     <div id="container">
-      <h1>AI Content Generator</h1>
-
+      <h1>AI Joke Generator</h1>
       <input
         type="text"
         id="search-box"
-        placeholder="Ask something (e.g., 'tell me a joke')"
+        placeholder="Ask something (e.g., 'Tell me a joke')"
       />
       <button id="show-form">Generate Content</button>
 
       <div id="instruction-form">
-        <h2>Enter your instruction (e.g., "Generate a joke about animals")</h2>
+        <h2>What kind of joke are you in the mood for?</h2>
         <input
           type="text"
           id="user-input"
-          placeholder="Type your instruction here"
+          placeholder="e.g., 'Tell me a programming joke'"
         />
         <button id="generate-content">Generate</button>
       </div>
 
       <div id="generated-content-box">
-        <h3>Generated Content:</h3>
-        <p id="generated-content">
-          Your AI-generated content will appear here.
-        </p>
+        <h3>Generated Joke:</h3>
+        <p id="generated-content">Your AI-generated joke will appear here.</p>
       </div>
 
       <footer>
-        Created by Tori with Love<br />
-        Hosted on
-        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer"
-          >Vercel</a
-        ><br />
-        Check the code on
+        Created by Tori with 💖 <br />
+        Hosted on <a href="https://vercel.com" target="_blank">Vercel</a> <br />
+        View on
         <a
-          href="https://github.com/babycoder91a/Jokegeneratorhub/blob/main/index.html"
+          href="https://github.com/babycoder91a/Jokegeneratorhub"
           target="_blank"
-          rel="noopener noreferrer"
           >GitHub</a
         >
       </footer>
     </div>
 
     <script>
-      // Show form when the user types a relevant question into the search box
+      // Dark Mode Toggle
       document
-        .getElementById("search-box")
-        .addEventListener("input", function () {
-          const searchQuery = document
-            .getElementById("search-box")
-            .value.toLowerCase();
-          const showFormButton = document.getElementById("show-form");
+        .getElementById("dark-mode-toggle")
+        .addEventListener("click", () => {
+          document.body.classList.toggle("dark");
+        });
 
-          if (
-            searchQuery.includes("tell me") ||
-            searchQuery.includes("generate") ||
-            searchQuery.includes("content")
-          ) {
-            showFormButton.style.display = "block"; // Show the button
-          } else {
-            showFormButton.style.display = "none"; // Hide the button
+      // Search functionality to show the form
+      const searchBox = document.getElementById("search-box");
+      const showFormButton = document.getElementById("show-form");
+
+      searchBox.addEventListener("input", function () {
+        const query = searchBox.value.toLowerCase();
+        if (
+          query.includes("tell me") ||
+          query.includes("generate") ||
+          query.includes("content")
+        ) {
+          showFormButton.style.display = "block";
+        } else {
+          showFormButton.style.display = "none";
+        }
+      });
+
+      showFormButton.addEventListener("click", function () {
+        document.getElementById("instruction-form").style.display = "block";
+        searchBox.style.display = "none";
+        showFormButton.style.display = "none";
+      });
+
+      // Joke generation
+      const generateButton = document.getElementById("generate-content");
+      generateButton.addEventListener("click", async function () {
+        const userInput = document.getElementById("user-input").value.trim();
+        const outputBox = document.getElementById("generated-content");
+        const outputContainer = document.getElementById(
+          "generated-content-box"
+        );
+
+        try {
+          const response = await fetch("/api/generate-content", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ prompt: userInput }),
+          });
+
+          if (!response.ok) throw new Error("Backend API failed");
+
+          const data = await response.json();
+          outputBox.textContent = data.content;
+          outputContainer.style.display = "block";
+        } catch (error) {
+          console.warn("Falling back to joke scraping...");
+          try {
+            const fallbackJokes = [
+              "Why do programmers prefer dark mode? Because light attracts bugs!",
+              "There are only 10 kinds of people in this world: those who know binary and those who don't.",
+              "A programmer’s wife tells him: ‘While you’re at the store, buy some eggs.’ He never comes back.",
+              "How many programmers does it take to change a light bulb? None. It's a hardware problem.",
+            ];
+            const randomJoke =
+              fallbackJokes[Math.floor(Math.random() * fallbackJokes.length)];
+            outputBox.textContent = randomJoke;
+            outputContainer.style.display = "block";
+          } catch (fallbackError) {
+            console.error("Fallback failed:", fallbackError);
+            alert("Unable to generate content at the moment.");
           }
-        });
-
-      // Show the form and hide the search box when the user clicks on the 'Generate Content' button
-      document
-        .getElementById("show-form")
-        .addEventListener("click", function () {
-          document.getElementById("instruction-form").style.display = "block";
-          document.getElementById("search-box").style.display = "none";
-          document.getElementById("show-form").style.display = "none";
-        });
-
-      // Function to generate AI-based content based on user input
-      document
-        .getElementById("generate-content")
-        .addEventListener("click", function () {
-          const userInput = document
-            .getElementById("user-input")
-            .value.toLowerCase()
-            .trim();
-          let generatedContent = "";
-
-          // List of jokes including your new ones
-          const jokes = [
-            "How many programmers does it take to screw in a lightbulb? None. We don't address hardware issues.",
-            "A programmer walks into a bar, holds up two fingers, and says, 'I'll have three beers please.'",
-            "Why did the computer programmer go to the coffee shop? To get a taste of Java.",
-            "Why do programmers get confused between Halloween and Christmas? Because OCT 31 = DEC 25.",
-            "Why do most programmers use dark mode? Because the light attracts too many bugs.",
-            "Why are Communists bad Java programmers? They don't like classes.",
-            "How many programmers do you need to fix a light bulb? None, it's a hardware issue!",
-            "What’s a ghost’s favorite data type? A boooolean.",
-            "If you’re paid to code, you’re a programmer. But what if it’s a hobby? Then you are just a grammer.",
-            "PSA: Please be advised that “beef stew” is no longer an allowable password. It’s not stroganoff.",
-            "A man walks into a pet shop and sees 3 monkeys, each in a cage, each with a computer. The man asks, 'What is the story with the monkeys?' 'They are programming monkeys! This one can complete 100 lines of C++ in an hour – 100$.'",
-            "How do hackers escape the police? \\police.",
-            "Why does Task Manager use the phrase 'Kill the Application'? Because they are all executable!",
-          ];
-
-          // Randomly select a joke
-          generatedContent = jokes[Math.floor(Math.random() * jokes.length)];
-
-          // Display generated content
-          document.getElementById("generated-content").textContent =
-            generatedContent;
-          document.getElementById("generated-content-box").style.display =
-            "block"; // Show the content box
-        });
+        }
+      });
     </script>
   </body>
 </html>
